@@ -4,26 +4,9 @@
     <title>Popup</title>
     <link rel="stylesheet" href="tailwind-output.css"> 
 </head>
-<body class="p-4 bg-gray-100" style="width: 300px;"> 
+<body class="bg-gray-900" style="width: 300px;"> 
 
-    <h1 class="text-lg font-bold text-center mb-4">Search Form</h1>
-
-    <form id="searchForm" class="flex flex-col">
-        <label for="searchInput" class="mb-2 text-sm font-semibold">Search Query:</label>
-        <input type="text" id="searchInput" class="mb-3 p-2 border border-gray-300 rounded">
-        
-        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Search
-        </button>
-    </form>
-
-    <script>
-        document.getElementById('searchForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const searchQuery = document.getElementById('searchInput').value;
-            console.log('Searching for:', searchQuery);
-        });
-    </script>
+    <input type="text" id="searchInput" class="flex h-10 w-full rounded-md border border-input bg-blue-500 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
 
 </body>
 </html>
