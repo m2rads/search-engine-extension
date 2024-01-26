@@ -1,0 +1,26 @@
+{
+    "name": "Search Engine",
+    "version": "0.1.0",
+    "description": "AI powered search engine for searching within websites",
+    "permissions": ["storage", "tabs"],
+    "host_permissions": ["<all_urls>"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content-script.js"]
+      }
+    ],
+    "action": {
+      "default_icon": {
+        "16": "assets/ext-icon.png",
+        "24": "assets/ext-icon.png",
+        "32": "assets/ext-icon.png"
+      },
+      "default_title": "Search Engine",
+      "default_popup": "popup.html"
+    },
+    "manifest_version": 3
+}
