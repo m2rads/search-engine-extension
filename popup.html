@@ -1,1 +1,29 @@
-<p>hello world</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Popup</title>
+    <link rel="stylesheet" href="tailwind-output.css"> 
+</head>
+<body class="p-4 bg-gray-100" style="width: 300px;"> 
+
+    <h1 class="text-lg font-bold text-center mb-4">Search Form</h1>
+
+    <form id="searchForm" class="flex flex-col">
+        <label for="searchInput" class="mb-2 text-sm font-semibold">Search Query:</label>
+        <input type="text" id="searchInput" class="mb-3 p-2 border border-gray-300 rounded">
+        
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Search
+        </button>
+    </form>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const searchQuery = document.getElementById('searchInput').value;
+            console.log('Searching for:', searchQuery);
+        });
+    </script>
+
+</body>
+</html>
