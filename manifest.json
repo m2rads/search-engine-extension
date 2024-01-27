@@ -2,7 +2,7 @@
     "name": "Search Engine",
     "version": "0.1.0",
     "description": "AI powered search engine for searching within websites",
-    "permissions": ["storage", "tabs"],
+    "permissions": ["storage", "tabs", "sidePanel"],
     "host_permissions": ["<all_urls>"],
     "background": {
       "service_worker": "background.js"
