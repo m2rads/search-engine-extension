@@ -1,25 +1,26 @@
-function searchAndHighlight(searchTerm) {
-    if (!searchTerm) {
-        return false;
+function searchAndMark(searchTerm) {
+    let count = 0;
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    let node;
+
+    while (node = walker.nextNode()) {
+        if (node.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
+            const parent = node.parentNode;
+            const span = document.createElement('span');
+            const anchorId = `searchResult${count}`;
+            span.id = anchorId;
+            span.innerHTML = node.textContent.replace(new RegExp(searchTerm, 'gi'), match => `<mark>${match}</mark>`);
+            parent.replaceChild(span, node);
+            count++;
+        }
     }
 
-    const bodyText = document.body.innerText;
-    if (bodyText.includes(searchTerm)) {
-        // Create a regex for case-insensitive search
-        const searchRegex = new RegExp(`(${searchTerm})`, 'gi');
-
-        // Replace the first occurrence with highlighted text
-        document.body.innerHTML = document.body.innerHTML.replace(searchRegex, '<span style="background-color: yellow;">$1</span>');
-
-        return true;
-    }
-
-    return false;
+    return count;
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "search") {
-        const found = searchAndHighlight(request.searchTerm);
-        sendResponse({ found: found });
+        const count = searchAndMark(request.searchTerm);
+        sendResponse({ count: count });
     }
 });
