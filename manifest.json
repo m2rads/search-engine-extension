@@ -30,7 +30,7 @@
         "32": "assets/ext-icon.png"
       },
       "default_title": "Search Engine",
-      "default_popup": "popup.html"
+      "default_popup": "sidepanel.html"
     },
     "manifest_version": 3
 }
