@@ -1,7 +1,7 @@
 // DATA PLACEHOLDER
 const searchResults = [
-    { title: 'Routing: Loading UI and Streaming | Next.js', link: 'https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming' },
-    { title: 'Learn Next.js: Streaming | Next.js', link: 'https://nextjs.org/learn/dashboard-app/streaming' },
+    {kind: 'customsearch#result', title: 'Learn Next.js: Streaming | Next.js', link: 'https://nextjs.org/learn/dashboard-app/streaming', displayLink: 'nextjs.org', cacheId: "XmJuNBpcjeMJ", htmlSnippet: "Built on top of <b>Suspense</b>, Loading UI allows you to create a fallback for specific route segments, and automatically stream content as it becomes ready.", },
+    {kind: 'customsearch#result', title: 'Learn Next.js: Streaming | Next.js', link: 'https://nextjs.org/learn/dashboard-app/streaming', displayLink: 'nextjs.org', cacheId: "XmJuNBpcjeMJ", htmlSnippet: "Built on top of <b>Suspense</b>, Loading UI allows you to create a fallback for specific route segments, and automatically stream content as it becomes ready.", }
 ];
 
 
@@ -35,6 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // displaySearchResults(searchResults);
+
 });
 
 
@@ -59,24 +61,23 @@ function handleSearch() {
 function searchGoogleCustomSearch(apiKey, cx, query, callback) {
     const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${apiKey}&cx=${cx}`;
   
-    // Send a GET request to the API
-    // fetch(apiUrl)
-    //   .then(response => {
-    //     if (!response.ok) {
-    //       throw new Error(`HTTP error! Status: ${response.status}`);
-    //     }
-    //     return response.json();
-    //   })
-    //   .then(data => {
-    //     // Process the search results
-    //     const searchResults = data.items || [];
-    //     callback(null, searchResults);
-    //   })
-    //   .catch(error => {
-    //     // Handle errors
-    //     callback(error, null);
-    //   });
-    callback(null, searchResults); //delete after development
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Process the search results
+        const searchResults = data.items || [];
+        callback(null, searchResults);
+      })
+      .catch(error => {
+        // Handle errors
+        callback(error, null);
+      });
+    // callback(null, searchResults);
     return
 }
 
@@ -84,26 +85,41 @@ function searchGoogleCustomSearch(apiKey, cx, query, callback) {
 function displaySearchResults(results) {
     const resultsContainer = document.getElementById('resultsContainer');
   
-    // Check if the container exists
     if (!resultsContainer) {
       console.error('Results container not found.');
       return;
     }
   
-    // Clear the container content
     resultsContainer.innerHTML = '';
   
-    // Create a list to hold the search results
-    const resultList = document.createElement('ul');
+    const resultList = document.createElement('div');
   
     // Loop through the search results and create list items with links
     results.forEach((result, index) => {
-      const listItem = document.createElement('li');
-      listItem.className = "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-      const link = document.createElement('a');
-      link.href = result.link;
-      link.textContent = result.title;
-      listItem.appendChild(link);
+      const listItem = document.createElement('div');
+      const title = document.createElement('a');
+      const description = document.createElement('p');
+      const thumbnail = document.createElement('img');
+      
+      // ListItem container
+      listItem.className = "flex flex-col space-y-1.5 p-6 rounded-xl border bg-card text-card-foreground shadow mt-5"
+      
+      // Items inside container
+      console.log(`thumbnail: ${result.pagemap.cse_image} `)
+    //   thumbnail.src = result.pagemap.cse_thumbnail[0];
+    //   thumbnail.alt = "Thumbnail image"
+    //   thumbnail.classList = ""
+      
+      title.href = result.link;
+      title.textContent = result.title;
+      title.className = "p-1 text-slate-300 font-semibold leading-none tracking-tight"
+      
+      description.textContent = result.htmlSnippet
+      description.classList = "p-1 text-sm text-slate-400 text-muted-foreground"    
+
+      listItem.appendChild(thumbnail);
+      listItem.appendChild(title);
+      listItem.appendChild(description)
       resultList.appendChild(listItem);
     });
   
