@@ -9,11 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var searchInput = document.getElementById('searchInput');
     var resultsContainer = document.getElementById("resultsContainer");
 
-    // custome search Engine
-    const apiKey = 'AIzaSyC5AiwHvS3sqCzwMvpT9qzI7CPLNLt4jN0'; 
-    const searchEngineId = 'e0c834723631f455c'; 
-    const query = 'site:https://nextjs.org suspense';
-
     if (!searchInput || !resultsContainer) {
         console.error('One or more elements are not found');
         return;
@@ -23,15 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.key === 'Enter') {
             let searchTerm = searchInput.value;
             console.log(`search term: ${searchTerm}`)
-
-            searchGoogleCustomSearch(apiKey, searchEngineId, query, (error, results) => {
-                if (error) {
-                  console.error('Error:', error);
-                } else {
-                  console.log('Search Results:', results);
-                  displaySearchResults(results);
-                }
-            });
+            handleSearch()
         }
     });
 
@@ -51,6 +38,7 @@ function handleSearch() {
             }
             if (response && response.results.length > 0) {
                 console.log(`response.results.length: ${response.results.length}`);
+                displaySearchResults(response.results)
             } else {
                 alert("Search term not found on this page.");
             }
@@ -58,28 +46,28 @@ function handleSearch() {
     });
 }
 
-function searchGoogleCustomSearch(apiKey, cx, query, callback) {
-    const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${apiKey}&cx=${cx}`;
+// function searchGoogleCustomSearch(apiKey, cx, query, callback) {
+//     const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${apiKey}&cx=${cx}`;
   
-    fetch(apiUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Process the search results
-        const searchResults = data.items || [];
-        callback(null, searchResults);
-      })
-      .catch(error => {
-        // Handle errors
-        callback(error, null);
-      });
-    // callback(null, searchResults);
-    return
-}
+//     fetch(apiUrl)
+//       .then(response => {
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+//         return response.json();
+//       })
+//       .then(data => {
+//         // Process the search results
+//         const searchResults = data.items || [];
+//         callback(null, searchResults);
+//       })
+//       .catch(error => {
+//         // Handle errors
+//         callback(error, null);
+//       });
+//     // callback(null, searchResults);
+//     return
+// }
 
 
 function displaySearchResults(results) {
