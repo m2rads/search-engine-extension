@@ -1,3 +1,10 @@
+// DATA PLACEHOLDER
+const searchResults = [
+    { title: 'Routing: Loading UI and Streaming | Next.js', link: 'https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming' },
+    { title: 'Learn Next.js: Streaming | Next.js', link: 'https://nextjs.org/learn/dashboard-app/streaming' },
+];
+
+
 document.addEventListener('DOMContentLoaded', function() {
     var searchInput = document.getElementById('searchInput');
     var resultsContainer = document.getElementById("resultsContainer");
@@ -6,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const apiKey = 'AIzaSyC5AiwHvS3sqCzwMvpT9qzI7CPLNLt4jN0'; 
     const searchEngineId = 'e0c834723631f455c'; 
     const query = 'site:https://nextjs.org suspense';
-
 
     if (!searchInput || !resultsContainer) {
         console.error('One or more elements are not found');
@@ -31,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+
 function handleSearch() {
     let searchTerm = searchInput.value;
 
@@ -53,22 +60,24 @@ function searchGoogleCustomSearch(apiKey, cx, query, callback) {
     const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${apiKey}&cx=${cx}`;
   
     // Send a GET request to the API
-    fetch(apiUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Process the search results
-        const searchResults = data.items || [];
-        callback(null, searchResults);
-      })
-      .catch(error => {
-        // Handle errors
-        callback(error, null);
-      });
+    // fetch(apiUrl)
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! Status: ${response.status}`);
+    //     }
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     // Process the search results
+    //     const searchResults = data.items || [];
+    //     callback(null, searchResults);
+    //   })
+    //   .catch(error => {
+    //     // Handle errors
+    //     callback(error, null);
+    //   });
+    callback(null, searchResults); //delete after development
+    return
 }
 
 
