@@ -1,74 +1,24 @@
-// DATA PLACEHOLDER
-const searchResults = [
-    {kind: 'customsearch#result', title: 'Learn Next.js: Streaming | Next.js', link: 'https://nextjs.org/learn/dashboard-app/streaming', displayLink: 'nextjs.org', cacheId: "XmJuNBpcjeMJ", htmlSnippet: "Built on top of <b>Suspense</b>, Loading UI allows you to create a fallback for specific route segments, and automatically stream content as it becomes ready.", },
-    {kind: 'customsearch#result', title: 'Learn Next.js: Streaming | Next.js', link: 'https://nextjs.org/learn/dashboard-app/streaming', displayLink: 'nextjs.org', cacheId: "XmJuNBpcjeMJ", htmlSnippet: "Built on top of <b>Suspense</b>, Loading UI allows you to create a fallback for specific route segments, and automatically stream content as it becomes ready.", }
-];
-
-
 document.addEventListener('DOMContentLoaded', function() {
     var searchInput = document.getElementById('searchInput');
     var resultsContainer = document.getElementById("resultsContainer");
 
-    if (!searchInput || !resultsContainer) {
+    if (!searchInput) {
         console.error('One or more elements are not found');
         return;
     }
 
     searchInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
-            let searchTerm = searchInput.value;
-            console.log(`search term: ${searchTerm}`)
             handleSearch()
         }
     });
 
-    // displaySearchResults(searchResults);
-
 });
-
 
 function handleSearch() {
     let searchTerm = searchInput.value;
-
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {action: "search", searchTerm: searchTerm}, function(response) {
-            if (chrome.runtime.lastError) {
-                console.error('Error:', chrome.runtime.lastError);
-                return;
-            }
-            if (response && response.results.length > 0) {
-                console.log(`response.results.length: ${response.results.length}`);
-                displaySearchResults(response.results)
-            } else {
-                alert("Search term not found on this page.");
-            }
-        });
-    });
-}
-
-// function searchGoogleCustomSearch(apiKey, cx, query, callback) {
-//     const apiUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${apiKey}&cx=${cx}`;
-  
-//     fetch(apiUrl)
-//       .then(response => {
-//         if (!response.ok) {
-//           throw new Error(`HTTP error! Status: ${response.status}`);
-//         }
-//         return response.json();
-//       })
-//       .then(data => {
-//         // Process the search results
-//         const searchResults = data.items || [];
-//         callback(null, searchResults);
-//       })
-//       .catch(error => {
-//         // Handle errors
-//         callback(error, null);
-//       });
-//     // callback(null, searchResults);
-//     return
-// }
-
+    console.log(`search term: ${searchTerm}`)
+}  
 
 function displaySearchResults(results) {
     const resultsContainer = document.getElementById('resultsContainer');
